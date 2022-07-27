@@ -38,7 +38,7 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 
     let v = quote! {
         impl #name {
-            pub const fn to_array(&self) -> [#name; #arms_len] {
+            pub const fn to_array() -> [#name; #arms_len] {
                 [#(#arms),*]
             }
         }
