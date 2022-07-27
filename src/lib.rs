@@ -19,27 +19,29 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
         _ => return macro_error("Can only be derived on an enum"),
     };
 
-    let mut arms = Vec::<TokenStream>::new();
+    let (array_arms, array_len) = {
+        let mut arms = Vec::<TokenStream>::new();
 
-    for var in vars.iter() {
-        let var_name = &var.ident;
+        for var in vars.iter() {
+            let var_name = &var.ident;
 
-        match var.fields {
-            Fields::Unit => (),
-            _ => return macro_error("Enum cannot have arguments"),
-        };
+            match var.fields {
+                Fields::Unit => (),
+                _ => return macro_error("Enum cannot have arguments"),
+            };
 
-        let arm = quote! { #name::#var_name };
+            let arm = quote! { #name::#var_name };
 
-        arms.push(arm);
-    }
+            arms.push(arm);
+        }
 
-    let arms_len = arms.len();
+        (arms, arms.len())
+    };
 
     let v = quote! {
         impl #name {
-            pub const fn to_array() -> [#name; #arms_len] {
-                [#(#arms),*]
+            pub const fn to_array() -> [#name; #array_len] {
+                [#(#array_arms),*]
             }
         }
     };
