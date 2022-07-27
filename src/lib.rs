@@ -30,7 +30,7 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
             Fields::Named(..) => quote! { {..} },
         };
 
-        let arm = quote! { #name::#var_name #params => stringify!(#var_name) };
+        let arm = quote! { #name::#var_name };
 
         arms.push(arm);
     }
