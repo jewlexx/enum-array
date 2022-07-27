@@ -24,9 +24,9 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
     for var in vars.iter() {
         let var_name = &var.ident;
 
-        let params = match var.fields {
-            Fields::Unit => quote! {},
-            _ => quote! { Default::default() },
+        match var.fields {
+            Fields::Unit => (),
+            _ => return macro_error("Enum cannot have arguments"),
         };
 
         let arm = quote! { #name::#var_name };
