@@ -57,10 +57,13 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
     };
 
     let str_array = {
-        str_vec.iter().map(|x| {
-            quote! { #x }
-        }).collect::<Vec<_>>()
-    }
+        str_vec
+            .iter()
+            .map(|x| {
+                quote! { #x }
+            })
+            .collect::<Vec<_>>()
+    };
 
     let v = quote! {
         impl #name {
