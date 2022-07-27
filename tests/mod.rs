@@ -16,4 +16,12 @@ mod tests {
 
         assert_eq!(array, enum_array);
     }
+
+    #[test]
+    fn test_array_str_match() {
+        let array = ["A", "B", "C"];
+        let enum_array = TestEnum::to_str_array();
+
+        assert_eq!(array, enum_array);
+    }
 }
