@@ -28,4 +28,12 @@ mod tests {
 
         assert_eq!(array, enum_array);
     }
+
+    #[test]
+    fn test_array_snake_match() {
+        let array = ["red_green_blue", "blue_green_red", "green_red_blue"];
+        let enum_array = TestEnum::to_snake_array();
+
+        assert_eq!(array, enum_array);
+    }
 }

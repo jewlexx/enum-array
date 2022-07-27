@@ -86,6 +86,10 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
             pub const fn to_str_array() -> [&'static str; #array_len] {
                 [#(#str_array),*]
             }
+
+            pub const fn to_snake_array() -> [&'static str; #array_len] {
+                [#(#str_snake_array),*]
+            }
         }
     };
 
