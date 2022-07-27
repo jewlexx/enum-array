@@ -39,7 +39,7 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
         (arms, arms_len)
     };
 
-    let (str_array, str_len) = {
+    let str_array = {
         let mut arms = Vec::<TokenStream>::new();
 
         for var in vars.iter() {
@@ -55,15 +55,17 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
             arms.push(arm);
         }
 
-        let arms_len = arms.len();
-
-        (arms, arms_len)
+        arms
     };
 
     let v = quote! {
         impl #name {
             pub const fn to_array() -> [#name; #array_len] {
                 [#(#array_arms),*]
+            }
+
+            pub const fn to_str_array() -> [&'static str; #array_len] {
+                [#(#str_array),*]
             }
         }
     };
