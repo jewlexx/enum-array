@@ -1,6 +1,14 @@
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{quote, quote_spanned};
 use syn::{parse_macro_input, Data, DeriveInput, Fields};
+
+macro_rules! macro_error {
+    ($(arg:tt)*) => {
+        quote_spanned! {
+            name.span() => compile_error!($($arg)*)
+         }
+    };
+}
 
 #[proc_macro_derive(EnumArray)]
 pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -9,7 +17,7 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
     let name = &ast.ident;
     let vars = match &ast.data {
         Data::Enum(v) => &v.variants,
-        _ => panic!("Can only be derived on an enum"),
+        _ => macro_error!("Can only be derived on an enum"),
     };
 
     let mut arms = Vec::<TokenStream>::new();
