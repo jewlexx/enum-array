@@ -39,8 +39,8 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
         (arms, arms_len)
     };
 
-    let str_array = {
-        let mut arms = Vec::<TokenStream>::new();
+    let str_vec = {
+        let mut arms = Vec::<String>::new();
 
         for var in vars.iter() {
             let var_name = &var.ident;
@@ -50,13 +50,17 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
                 _ => return macro_error("Enum cannot have arguments"),
             };
 
-            let arm = quote! { stringify!(#var_name) };
-
-            arms.push(arm);
+            arms.push(var_name.to_string());
         }
 
         arms
     };
+
+    let str_array = {
+        str_vec.iter().map(|x| {
+            quote! { #x }
+        }).collect::<Vec<_>>()
+    }
 
     let v = quote! {
         impl #name {
