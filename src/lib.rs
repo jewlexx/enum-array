@@ -34,8 +34,9 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 
             arms.push(arm);
         }
+        let arms_len = arms.len();
 
-        (arms, arms.len())
+        (arms, arms_len)
     };
 
     let v = quote! {
