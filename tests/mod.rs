@@ -23,7 +23,7 @@ mod tests {
 
     #[test]
     fn test_array_str_match() {
-        let array = ["RedGreenBlue", "BlueGreenREd", "GreenRedBlue"];
+        let array = ["RedGreenBlue", "BlueGreenRed", "GreenRedBlue"];
         let enum_array = TestEnum::to_str_array();
 
         assert_eq!(array, enum_array);
