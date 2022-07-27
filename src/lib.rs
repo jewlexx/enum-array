@@ -35,15 +35,18 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
         arms.push(arm);
     }
 
+    let arms_len = arms.len();
+
     let v = quote! {
         impl #name {
-            pub const fn const_to_string(&self) -> &'static str {
-                match *self {
-                    #(#arms),*
-                }
+            pub const fn to_array(&self) -> [#name; #arms_len] {
+                [#(#arms),*]
             }
         }
     };
 
     v.into()
 }
+
+#[cfg(test)]
+mod tests {}
