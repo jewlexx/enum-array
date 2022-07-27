@@ -48,4 +48,20 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+
+    #[derive(EnumArray)]
+    enum TestEnum {
+        A,
+        B,
+        C,
+    }
+
+    #[test]
+    fn test_array_match() {
+        let array = [TestEnum::A, TestEnum::B, TestEnum::C];
+
+        assert_eq!(array, TestEnum.to_array());
+    }
+}
