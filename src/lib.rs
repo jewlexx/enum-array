@@ -65,6 +65,18 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
             .collect::<Vec<_>>()
     };
 
+    let str_snake_array = {
+        use heck::ToSnakeCase;
+        str_vec
+            .iter()
+            .map(|x| {
+                let snake = x.to_snake_case();
+
+                quote! { #snake }
+            })
+            .collect::<Vec<_>>()
+    };
+
     let v = quote! {
         impl #name {
             pub const fn to_array() -> [#name; #array_len] {

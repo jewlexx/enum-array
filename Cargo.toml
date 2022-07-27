@@ -8,6 +8,7 @@ proc-macro = true
 
 [dependencies]
 const_strum = "0.1.1"
+heck = "0.4.0"
 proc-macro2 = "1.0.42"
 quote = "1.0.20"
 syn = "1.0.98"
