@@ -26,8 +26,7 @@ pub fn derive_enum_array(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 
         let params = match var.fields {
             Fields::Unit => quote! {},
-            Fields::Unnamed(..) => quote! { (..) },
-            Fields::Named(..) => quote! { {..} },
+            _ => quote! { Default::default() },
         };
 
         let arm = quote! { #name::#var_name };
